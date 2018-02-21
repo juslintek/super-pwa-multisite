@@ -80,6 +80,8 @@ if ( file_exists( $pwa_plugin_dir ) && is_plugin_active( $pwa_plugin_name ) ) {
 		echo '<meta name="theme-color" content="' . $settings['background_color'] . '">' . PHP_EOL;
 	}
 
+	add_action( 'wp_head', 'superpwa_add_manifest_to_header_mu' );
+
 	function superpwa_generate_sw_mu() {
 		// Get the service worker tempalte
 		$sw = superpwa_sw_template_mu();
@@ -270,7 +272,7 @@ if ( file_exists( $pwa_plugin_dir ) && is_plugin_active( $pwa_plugin_name ) ) {
 
 
 	add_action( 'init', function () {
-		global $pwa_plugin_name, $pwa_plugin_dir;
+		global $pwa_plugin_name;
 
 
 		remove_action( 'add_option_superpwa_settings', 'superpwa_after_save_settings_todo' );
@@ -318,6 +320,7 @@ if ( file_exists( $pwa_plugin_dir ) && is_plugin_active( $pwa_plugin_name ) ) {
 			remove_action( 'deactivate_' . $pwa_plugin_name, 'superpwa_deactivate_plugin' );
 		}
 
+		remove_action( 'wp_head', 'superpwa_add_manifest_to_header' );
 		remove_action( 'admin_init', 'superpwa_register_settings' );
 	} );
 
